@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      background-color: rgb(0, 0, 0);
+      height: auto;
+      width: fit-content;
+      color: white;
+      padding: 10px;
+      position: relative;
+      left: 10%;
+      border-radius: 10px;
+    }
+
+    li {
+      font-size: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 id="title"><span>Hello World</span></h1>
+  <ul>
+    <li>One</li>
+    <li>Two</li>
+    <li>
+      <div class="box">Box</div>
+    </li>
+    <li><a id="link" href="https://www.google.com/">Google</a></li>
+    <li><a id="link" href="https://www.youtube.com/">Youtube</a></li>
+    <li><a id="link" href="https://www.wikipedia.org/">Wikipedia</a></li>
+    <li><a id="link" href="https://in.pinterest.com/">Pinterest</a></li>
+  </ul>
+
+</body>
+<script>
+  //Adding an Item
+  const list = document.querySelector('ul');
+  const listItem = document.createElement('li');
+  listItem.appendChild(document.createTextNode('Three'));
+  list.appendChild(listItem);
+
+  //Adding an event listener
+  const box = document.querySelector(".box");
+  //box.addEventListener('click', (e) => console.log(e));
+
+  //list.addEventListener('click', (e) => console.log('List Clicked'), false);
+
+  //Event Bubbling
+  //box.addEventListener('click', (e) => console.log('Box Clicked'), false);
+
+  //Event Catching
+  //box.addEventListener('click', (e) => console.log('Box Clicked'), true);
+
+  //Stopping Propagation
+  // box.addEventListener('click', (e) => {
+  //   console.log('Box Clicked');
+  //   e.stopPropagation();
+  // }, false);
+
+  //Prevent Default Behaviour
+  // document.querySelector('#link').addEventListener('click', (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  // }, false)
+  const links = document.querySelectorAll('#link');
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation;
+    }, false);
+  })
+
+  //Make all list item content invisible
+  const listItems = document.querySelectorAll('li');
+
+  listItems.forEach((listItem) => {
+
+    listItem.addEventListener('click', (e) => {
+      //console.log('starts');
+      // console.log(listItem);
+      // console.log(e);
+      // console.log(e.target);
+      // console.log(e.target.tagName);
+      // console.log(e.target.parentNode);
+
+      //When the e.target is a div or an a we go to it's parent. to remove it otherwise normal method does not work on it.
+      let itemToRemove = e.target.parentNode;
+      if (e.target.tagName == 'A' || e.target.tagName == 'DIV') {
+        console.log('Link Clicked');
+        itemToRemove = itemToRemove.parentNode;
+      }
+
+      itemToRemove.removeChild(listItem);
+      //console.log('ends');
+    }, false);
+  })
+</script>
+
+</html>
